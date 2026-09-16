@@ -627,18 +627,18 @@
       alert('¡Fotos agregadas al carrusel!');
     });
 
-    /* =========================================
-       3. SINTETIZADOR AUDIO API (Riff Heavy Metal)
+        /* =========================================
+       3. REPRODUCTOR MP3 Y VISUALIZADOR DE AUDIO
        ========================================= */
-    let audioCtx = null;
-    let isPlaying = false;
-    let masterGain = null;
-    let timerId = null;
-
-    // Visualizador de audio
+    const mainAudio = document.getElementById('mainAudio');
+    const volRange = document.getElementById('volRange');
     const visualizer = document.getElementById('visualizer');
+
+    // Visualizador de audio (Barras)
     const barsCount = 20;
     const bars = [];
+    visualizer.innerHTML = ''; // Limpiar barras previas
+
     for (let i = 0; i < barsCount; i++) {
       const bar = document.createElement('div');
       bar.className = 'bar';
@@ -646,8 +646,9 @@
       bars.push(bar);
     }
 
+    // Animar las barras solo cuando la canción MP3 esté sonando
     function updateVisualizer() {
-      if (!isPlaying) {
+      if (mainAudio.paused) {
         bars.forEach(b => b.style.height = '10%');
         return;
       }
@@ -658,23 +659,13 @@
     }
     setInterval(updateVisualizer, 100);
 
-    function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.value = document.getElementById('volRange').value;
-        masterGain.connect(audioCtx.destination);
-      }
+    // Control de Volumen para tu archivo MP3
+    if (volRange) {
+      volRange.addEventListener('input', (e) => {
+        mainAudio.volume = e.target.value;
+      });
     }
 
-    document.getElementById('volRange').addEventListener('input', (e) => {
-      if (masterGain) masterGain.gain.value = e.target.value;
-    });
-
-    function playMetalNote(freq, duration) {
-      if (!audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
 
       // Sonido Distorsionado (Sawtooth)
       osc.type = 'sawtooth';
