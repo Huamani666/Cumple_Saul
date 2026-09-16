@@ -406,12 +406,20 @@
       </div>
     </div>
 
-    <!-- REPRODUCTOR / SINTETIZADOR METAL -->
+    <!-- REPRODUCTOR DE MÚSICA MP3 -->
     <div class="card">
       <div class="card-title">
         <i class="fa-solid fa-compact-disc"></i>
         <span>Música & Riff De Fondo</span>
       </div>
+
+      <!-- Reproductor HTML5 que cargará tu canción descargada -->
+      <audio controls autoplay id="mainAudio" style="width: 100%; margin-top: 10px;">
+        <source src="Bedroom - In my head (Subtitulado  Español  Lyrics)..mp3" type="audio/mpeg">
+        Tu navegador no soporta el reproductor de audio.
+      </audio>
+    </div>
+    
 
       <div class="player-visualizer" id="visualizer">
         <!-- Generado dinámicamente -->
